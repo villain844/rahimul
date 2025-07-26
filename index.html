@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RAHIMUL STORE</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk - RAHIMUL STORE</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <audio id="clickSound" src="assets/tombol-click.mp3" preload="auto"></audio>
   <div class="container">
-    <header>
-      <img src="assets/logo.png" alt="Logo" class="logo">
-      <h1>RAHIMUL STORE</h1>
-      <div class="socials">
-        <a href="https://whatsapp.com/channel/0029Vb2hfdpJkK70WwgbP83p" target="_blank">Testimoni</a>
-        <a href="https://www.instagram.com/rahimul_prime?igsh=NjIzZXJ3eW95ODl4" target="_blank">Instagram</a>
-        <a href="https://www.tiktok.com/@rahimul_store?_t=ZS-8yKkRf4bw1Z&_r=1" target="_blank">TikTok</a>
-      </div>
-    </header>
+    <h1 class="judul">RAHIMUL STORE</h1>
+    <div id="produk-container" class="produk-grid"></div>
 
-    <section id="produk-container"></section>
-    
-    <footer>
-      <p>© 2025 RAHIMUL STORE</p>
-    </footer>
+    <div class="sosial-media">
+      <h3>Ikuti Kami</h3>
+      <a href="https://whatsapp.com/channel/0029Vb2hfdpJkK70WwgbP83p" target="_blank">📢 Testimoni WA</a>
+      <a href="https://www.instagram.com/rahimul_prime?igsh=NjIzZXJ3eW95ODl4" target="_blank">📷 Instagram</a>
+      <a href="https://www.tiktok.com/@rahimul_store?_t=ZS-8yKkRf4bw1Z&_r=1" target="_blank">🎵 TikTok</a>
+    </div>
+
+    <div class="hubungi-admin">
+      <a href="https://wa.me/6281234567890" class="btn-admin" target="_blank">Hubungi Admin</a>
+    </div>
   </div>
 
-  <script src="database/dbbg.js"></script>
   <script src="database/dbproduk.js"></script>
-  <script src="script.js"></script>
+  <script src="database/dbbg.js"></script>
+  <script>
+    // Ambil background aktif dari dbbg.js
+    const aktifBG = dbbg.find(bg => bg.status === 'aktif');
+    if (aktifBG) document.body.style.backgroundImage = `url('${aktifBG.background}')`;
+
+    // Tampilkan produk dari dbproduk.js
+    const container = document.getElementById('produk-container');
+    dbproduk.forEach(produk => {
+      const card = document.createElement('div');
+      card.className = 'produk-card';
+      card.innerHTML = `
+        <img src="${produk.foto}" alt="${produk.nama}" class="produk-img" onclick="lihatFoto('${produk.foto}')">
+        <h2>${produk.nama}</h2>
+        <p>${produk.deskripsi}</p>
+        <p class="harga">💰 ${produk.harga}</p>
+        <a href="https://wa.me/${produk.wa}?text=Hai,%20saya%20ingin%20order%20produk:%20${encodeURIComponent(produk.nama)}" class="btn-order" target="_blank">Order Sekarang</a>
+      `;
+      container.appendChild(card);
+    });
+
+    function lihatFoto(url) {
+      const popup = document.createElement('div');
+      popup.className = 'popup-foto';
+      popup.innerHTML = `
+        <div class="popup-content">
+          <span onclick="this.parentElement.parentElement.remove()" class="close">&times;</span>
+          <img src="${url}" alt="Foto Produk" />
+        </div>
+      `;
+      document.body.appendChild(popup);
+    }
+  </script>
 </body>
 </html>
