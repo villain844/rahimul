@@ -1,4 +1,14 @@
-const dbbg = [
-  { id: 1, background: "https://files.catbox.moe/uo2ksh.jpeg", status: "nonaktif" },
-  { id: 2, background: "https://files.catbox.moe/0tbu87.png", status: "aktif" }
-];
+[
+  {
+    "id": "bg1",
+    "nama": "Neon City",
+    "url": "https://example.com/bg1.jpg",
+    "aktif": true
+  },
+  {
+    "id": "bg2",
+    "nama": "Cyberpunk Girl",
+    "url": "https://example.com/bg2.jpg",
+    "aktif": false
+  }
+]
